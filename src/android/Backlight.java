@@ -73,13 +73,13 @@ public class Backlight extends CordovaPlugin {
   }
 
   public void on(CallbackContext callbackContext) {
-    this.update((byte) '255', callbackContext);
+    this.update("255", callbackContext);
   }
 
   public void off(CallbackContext callbackContext) {
     // do not turn off when app is in background
     if (this.active) {
-      this.update((byte) '0', callbackContext);
+      this.update("0", callbackContext);
     }
   }
 
@@ -113,19 +113,19 @@ public class Backlight extends CordovaPlugin {
     return false;
   }
 
-  private void update(Byte aByte, CallbackContext callbackContext) {
+  private void update(String aByte, CallbackContext callbackContext) {
     FileOutputStream os = null;
     try {
       os = new FileOutputStream(BACKLIGHT_FILE_PATH);
       os.write(aByte);
       os.flush();
       os.close();
-      if (aByte == '0') {
+      if (aByte !== '0') {
         Log.d(TAG, "Backlight on");
-        on = true;
+        on = false;
       }
       else {
-        on = false;
+        on = true;
         Log.d(TAG, "Backlight off");
       }
       if (callbackContext != null) {
