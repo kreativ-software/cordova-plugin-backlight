@@ -120,7 +120,7 @@ public class Backlight extends CordovaPlugin {
       os.write(aByte);
       os.flush();
       os.close();
-      if (aByte !== '0') {
+      if (aByte != '0') {
         Log.d(TAG, "Backlight on");
         on = false;
       }
