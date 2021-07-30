@@ -113,14 +113,14 @@ public class Backlight extends CordovaPlugin {
     return false;
   }
 
-  private void update(String aByte, CallbackContext callbackContext) {
+  private void update(String newValue, CallbackContext callbackContext) {
     FileOutputStream os = null;
     try {
       os = new FileOutputStream(BACKLIGHT_FILE_PATH);
-      os.write(aByte);
+      os.write(newValue.getBytes());
       os.flush();
       os.close();
-      if (aByte != "0") {
+      if (newValue != "0") {
         Log.d(TAG, "Backlight on");
         on = false;
       }
