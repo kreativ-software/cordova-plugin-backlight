@@ -21,7 +21,7 @@ import java.io.IOException;
  */
 public class Backlight extends CordovaPlugin {
   private final String TAG = Backlight.class.getSimpleName();
-  private final String BACKLIGHT_FILE_PATH = "/sys/class/backlight/backlight/bl_power";
+  private final String BACKLIGHT_FILE_PATH = "/sys/class/backlight/backlight/brightness";
 
   // Prevent turning off backlight when app is in background mode
   private boolean active = false;
@@ -73,13 +73,13 @@ public class Backlight extends CordovaPlugin {
   }
 
   public void on(CallbackContext callbackContext) {
-    this.update((byte) '0', callbackContext);
+    this.update((byte) '255', callbackContext);
   }
 
   public void off(CallbackContext callbackContext) {
     // do not turn off when app is in background
     if (this.active) {
-      this.update((byte) '1', callbackContext);
+      this.update((byte) '0', callbackContext);
     }
   }
 
@@ -93,7 +93,7 @@ public class Backlight extends CordovaPlugin {
       fis = new FileInputStream(file);
       fis.read(bytes);
 
-      if (bytes[0] == (byte) '0') {
+      if (bytes[0] != (byte) '0') {
         return true;
       }
     }
